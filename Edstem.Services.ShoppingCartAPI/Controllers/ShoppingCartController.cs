@@ -1,7 +1,6 @@
 ﻿using Edstem.Services.ShoppingCartAPI.Models.Dto;
 using Edstem.Services.ShoppingCartAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Test.MessageBus;
 
 namespace Edstem.Services.ShoppingCartAPI.Controllers;

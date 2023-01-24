@@ -90,7 +90,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Edstem.Services.CouponAPI\Edstem.Services.CouponAPI.csproj" />
     <ProjectReference Include="..\Test.MessageBus\Test.MessageBus.csproj" />
   </ItemGroup>
 
