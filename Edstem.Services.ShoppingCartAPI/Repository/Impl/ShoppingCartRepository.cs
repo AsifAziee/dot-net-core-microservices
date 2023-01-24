@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Edstem.Services.ShoppingCartAPI.Data;
 using Edstem.Services.ShoppingCartAPI.Models;
 using Edstem.Services.ShoppingCartAPI.Models.Dto;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,8 @@
-using Edstem.Services.ShoppingCartAPI;
+using Edstem.Services.ShoppingCartAPI.Data;
 using Edstem.Services.ShoppingCartAPI.Repository;
 using Edstem.Services.ShoppingCartAPI.Repository.Impl;
 using Microsoft.EntityFrameworkCore;
+using Test.MessageBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ var dbContext = builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DataCon
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+
+builder.Services.AddSingleton<IMessageBus, AzureServiceBusMessageBus>( u =>
+    new AzureServiceBusMessageBus(builder.Configuration["AzureServiceBusSettings:ConnectionString"]));
+
 
 builder.Services.AddHttpClient<ICouponRepository, CouponRepository>(u => u.BaseAddress =
     new Uri(builder.Configuration["ServiceUrls:CouponAPI"]));
@@ -47,5 +52,11 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 app.UseSwagger();
-app.UseSwaggerUI();
+
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+    options.DocumentTitle = "Coupon Swagger";
+});
 app.Run();

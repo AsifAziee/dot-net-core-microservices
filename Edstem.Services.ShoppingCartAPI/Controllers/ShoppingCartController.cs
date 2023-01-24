@@ -1,6 +1,8 @@
 ﻿using Edstem.Services.ShoppingCartAPI.Models.Dto;
 using Edstem.Services.ShoppingCartAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Test.MessageBus;
 
 namespace Edstem.Services.ShoppingCartAPI.Controllers;
 
@@ -11,12 +13,16 @@ public class ShoppingCartController : Controller
     private readonly IShoppingCartRepository _repository;
     private readonly ICouponRepository _couponRepository;
     private readonly ILogger<ShoppingCartController> _logger;
+    private readonly IMessageBus _messageBus;
+    private readonly IConfiguration _configuration;
 
     public ShoppingCartController(IShoppingCartRepository repository, ICouponRepository couponRepository,
-        ILogger<ShoppingCartController> logger)
+        IConfiguration configuration,IMessageBus messageBus, ILogger<ShoppingCartController> logger)
     {
         _repository = repository;
         _couponRepository = couponRepository;
+        _messageBus = messageBus;
+        _configuration = configuration;
         _logger = logger;
     }
 
@@ -151,10 +157,13 @@ public class ShoppingCartController : Controller
 
         // get the cart details
         var cartDto = await _repository.GetCartByUserId(checkoutDto.UserId);
-        // checkoutDto.CartDetails = cartDto.CartDetails;
+        checkoutDto.CartDetails = cartDto.CartDetails;
 
-        // TODO:: send the message to the order queue 
+        checkoutDto.Id = Guid.NewGuid().ToString();
+        checkoutDto.MessageCreated= DateTime.Now;
 
+        var topic = _configuration.GetSection("AzureServiceBusSettings:TopicName").Value;
+        await _messageBus.Publish(checkoutDto, topic);
         return Ok();
     }
 }

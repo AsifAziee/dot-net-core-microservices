@@ -1,7 +1,7 @@
 ﻿using Edstem.Services.ShoppingCartAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Edstem.Services.ShoppingCartAPI;
+namespace Edstem.Services.ShoppingCartAPI.Data;
 
 public class DataContext : DbContext
 {
