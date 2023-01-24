@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "e1ac11f7-93b6-4d2f-9e2a-598ba03bcbf9",
+		"name": "ShoppingCartAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17020731"
+	},
+	"item": [
+		{
+			"name": "AddToCart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"CartHeader\": {\r\n        \"UserId\": \"2\"\r\n    },\r\n    \"CartDetails\": [\r\n        {\r\n            \"ProductId\": 5,\r\n            \"Count\": 1\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7005/api/cart/add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"api",
+						"cart",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCartByUserId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7005/api/cart/get/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"api",
+						"cart",
+						"get",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveFromCart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7005/api/cart/remove/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"api",
+						"cart",
+						"remove",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ClearCart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"2\"",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7005/api/cart/clear/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"api",
+						"cart",
+						"clear",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ApplyCoupnCode",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7005/api/cart/addCoupon/3/ABCD",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"api",
+						"cart",
+						"addCoupon",
+						"3",
+						"ABCD"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveCoupon",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7005/api/cart/removeCoupon/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7005",
+					"path": [
+						"api",
+						"cart",
+						"removeCoupon",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
