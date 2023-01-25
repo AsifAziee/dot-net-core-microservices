@@ -1,9 +1,9 @@
-﻿using Edstem.Services.OrderAPI.Models.Dto;
+﻿using Edstem.Services.OrderAPI.Models;
 
 namespace Edstem.Services.OrderAPI.Repository;
 
 public interface IOrderHeaderRepository
 {
-    Task<OrderHeaderDto> GetOrderHeadersAsync(int orderHeaderId);
-    Task<OrderHeaderDto> CreateOrderHeadersAsync(OrderHeaderDto orderHeader);
+    Task<OrderHeader> GetOrder(int orderHeaderId);
+    Task<OrderHeader> AddOrder(OrderHeader orderHeader);
 }

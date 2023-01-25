@@ -1,4 +1,5 @@
-﻿using Edstem.Services.OrderAPI.Models;
+﻿using AutoMapper;
+using Edstem.Services.OrderAPI.Models;
 using Edstem.Services.OrderAPI.Models.Dto;
 using Edstem.Services.OrderAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,13 @@ public class OrderHeaderController : Controller
 {
     private readonly IOrderHeaderRepository _orderHeaderRepository;
     private readonly ILogger<OrderHeaderController> _logger;
+    private readonly IMapper _mapper;
 
-    public OrderHeaderController(IOrderHeaderRepository orderHeaderRepository, ILogger<OrderHeaderController> logger)
+    public OrderHeaderController(IOrderHeaderRepository orderHeaderRepository, ILogger<OrderHeaderController> logger, IMapper mapper)
     {
         _orderHeaderRepository = orderHeaderRepository;
         _logger = logger;
+        _mapper = mapper;
     }
 
     [HttpGet("/api/orders/{orderHeaderId}")]
@@ -21,9 +24,9 @@ public class OrderHeaderController : Controller
     {
         try
         {
-            var response = await _orderHeaderRepository.GetOrderHeadersAsync(orderHeaderId);
+            var response = await _orderHeaderRepository.GetOrder(orderHeaderId);
             _logger.LogInformation($"Successfully retreived data with orderId: {orderHeaderId}");
-            return Ok(response);
+            return Ok(_mapper.Map<OrderHeaderDto>(response));
         }
         catch (Exception ex)
         {
@@ -37,7 +40,8 @@ public class OrderHeaderController : Controller
     {
         try
         {
-            var order = await _orderHeaderRepository.CreateOrderHeadersAsync(orderHeaderDto);
+            var orderHeader = _mapper.Map<OrderHeader>(orderHeaderDto);
+            var order = await _orderHeaderRepository.AddOrder(orderHeader);
             var uri = "/api/orders/" + order.OrderHeaderId;
             _logger.LogInformation($"Successfully placed order by user with userId: {order.UserId}");
             return Created(uri, order);

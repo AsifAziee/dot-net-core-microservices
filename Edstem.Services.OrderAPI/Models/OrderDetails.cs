@@ -13,6 +13,6 @@ public class OrderDetails
     [ForeignKey("OrderHeaderId")] public virtual OrderHeader OrderHeader { get; set; }
     public int ProductId { get; set; }
     public int Count { get; set; }
-    public string ProductName { get; set; }
+    //public string ProductName { get; set; }
     public double Price { get; set; }
 }

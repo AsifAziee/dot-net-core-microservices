@@ -8,37 +8,36 @@ namespace Edstem.Services.OrderAPI.Repository.Impl;
 
 public class OrderHeaderRepository : IOrderHeaderRepository
 {
-    private readonly DataContext _dataContext;
-    private readonly IMapper _mapper;
+    private readonly DbContextOptions<DataContext> _dbOptions;
 
-    public OrderHeaderRepository(DataContext dataContext, IMapper mapper)
+    public OrderHeaderRepository(DbContextOptions<DataContext> dbOptions)
     {
-        _dataContext = dataContext;
-        _mapper = mapper;
+        _dbOptions = dbOptions;
     }
 
-    public async Task<OrderHeaderDto> CreateOrderHeadersAsync(OrderHeaderDto orderHeaderDto)
+    public async Task<OrderHeader> AddOrder(OrderHeader orderHeader)
     {
-        var orderHeader = _mapper.Map<OrderHeader>(orderHeaderDto);
-        await _dataContext.OrderHeaders.AddAsync(orderHeader);
+        //var orderHeader = _mapper.Map<OrderHeader>(orderHeaderDto);
+        await using var db = new DataContext(_dbOptions);
+        await db.OrderHeaders.AddAsync(orderHeader);
 
         // update order details
         foreach (var orderDetail in orderHeader.OrderDetails)
         {
             orderDetail.OrderHeaderId = orderHeader.OrderHeaderId;
         }
-        await _dataContext.SaveChangesAsync();
+        await db.SaveChangesAsync();
 
-        return _mapper.Map<OrderHeaderDto>(orderHeader);
+        return orderHeader;
 
     }
 
-    public async Task<OrderHeaderDto> GetOrderHeadersAsync(int orderHeaderId)
+    public async Task<OrderHeader> GetOrder(int orderHeaderId)
     {
-        var order = await _dataContext.OrderHeaders
+        await using var db = new DataContext(_dbOptions);
+        var order = await db.OrderHeaders
                 .Include(o => o.OrderDetails)
                 .SingleOrDefaultAsync(s => s.OrderHeaderId == orderHeaderId);
-        return _mapper.Map<OrderHeaderDto>(order);
-
+        return order;
     }
 }

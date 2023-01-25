@@ -14,5 +14,7 @@ public class CartDetails
     public virtual CartHeader CartHeader { get; set; }
     
     public int ProductId { get; set; }
+
+    public double Price { get; set; }
     public int Count { get; set; }
 }

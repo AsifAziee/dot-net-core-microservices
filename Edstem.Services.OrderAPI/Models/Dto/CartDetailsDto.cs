@@ -1,4 +1,4 @@
-namespace Edstem.Services.ShoppingCartAPI.Models.Dto;
+﻿namespace Edstem.Services.ShoppingCartAPI.Models.Dto;
 
 public class CartDetailsDto
 {
