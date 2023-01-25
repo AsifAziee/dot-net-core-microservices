@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Edstem.Services.OrderAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230125050146_PriceAdded")]
-    partial class PriceAdded
+    [Migration("20230125105852_MyFirstMigration")]
+    partial class MyFirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,10 +44,6 @@ namespace Edstem.Services.OrderAPI.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("OrderHeaderId", "OrderDetailsId");
 

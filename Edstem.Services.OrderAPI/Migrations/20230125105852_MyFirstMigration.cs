@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Edstem.Services.OrderAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class DbMigrations : Migration
+    public partial class MyFirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,12 +42,11 @@ namespace Edstem.Services.OrderAPI.Migrations
                     OrderHeaderId = table.Column<int>(type: "integer", nullable: false),
                     ProductId = table.Column<int>(type: "integer", nullable: false),
                     Count = table.Column<int>(type: "integer", nullable: false),
-                    ProductName = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailsId);
+                    table.PrimaryKey("PK_OrderDetails", x => new { x.OrderHeaderId, x.OrderDetailsId });
                     table.ForeignKey(
                         name: "FK_OrderDetails_OrderHeaders_OrderHeaderId",
                         column: x => x.OrderHeaderId,
@@ -55,11 +54,6 @@ namespace Edstem.Services.OrderAPI.Migrations
                         principalColumn: "OrderHeaderId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderDetails_OrderHeaderId",
-                table: "OrderDetails",
-                column: "OrderHeaderId");
         }
 
         /// <inheritdoc />

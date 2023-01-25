@@ -42,10 +42,6 @@ namespace Edstem.Services.OrderAPI.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("OrderHeaderId", "OrderDetailsId");
 
                     b.ToTable("OrderDetails");
